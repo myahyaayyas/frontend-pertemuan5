@@ -2,7 +2,7 @@ import styles from "./footer.module.css";
 
 export function Footer() {
   return (
-    <footer calssName={styles.footer}>
+    <footer>
       <div>
         <h1>Covid ID</h1>
         Developed by aufaroot18
