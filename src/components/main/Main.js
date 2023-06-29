@@ -1,8 +1,123 @@
 import styles from "./main.module.css";
 import foto from "./img1.svg";
 import foto2 from "./img2.svg";
+import { useState } from "react";
 
 function Main() {
+  const [data, setData] = useState([
+    {
+      no: 1,
+      provinsi: "aceh",
+      positif: 0,
+      sembuh: 0,
+      dirawat: 0,
+      meninggal: 0,
+    },
+    {
+      no: 2,
+      provinsi: "bandung",
+      positif: 0,
+      sembuh: 0,
+      dirawat: 0,
+      meninggal: 0,
+    },
+    {
+      no: 3,
+      provinsi: "depok",
+      positif: 0,
+      sembuh: 0,
+      dirawat: 0,
+      meninggal: 0,
+    },
+    {
+      no: 4,
+      provinsi: "jakarta",
+      positif: 0,
+      sembuh: 0,
+      dirawat: 0,
+      meninggal: 0,
+    },
+    {
+      no: 5,
+      provinsi: "medan",
+      positif: 0,
+      sembuh: 0,
+      dirawat: 0,
+      meninggal: 0,
+    },
+  ]);
+
+  const [newProvinsi, setNewProvinsi] = useState("");
+  const [newStatus, setNewStatus] = useState("");
+  const [newJumlah, setNewJumlah] = useState("");
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (!newProvinsi || !newStatus || !newJumlah) {
+      alert("Semua field harus diisi");
+      return;
+    }
+
+    const existingData = data.find(
+      (item) => item.provinsi === newProvinsi.toLowerCase()
+    );
+
+    if (existingData) {
+      const updatedData = data.map((item) =>
+        item.provinsi === newProvinsi.toLowerCase()
+          ? {
+              ...item,
+              positif:
+                newStatus === "Positif"
+                  ? item.positif + parseInt(newJumlah)
+                  : item.positif,
+              sembuh:
+                newStatus === "Sembuh"
+                  ? item.sembuh + parseInt(newJumlah)
+                  : item.sembuh,
+              dirawat:
+                newStatus === "Dirawat"
+                  ? item.dirawat + parseInt(newJumlah)
+                  : item.dirawat,
+              meninggal:
+                newStatus === "Meninggal"
+                  ? item.meninggal + parseInt(newJumlah)
+                  : item.meninggal,
+            }
+          : item
+      );
+
+      setData(updatedData);
+    } else {
+      const newData = {
+        no: data.length + 1,
+        provinsi: newProvinsi,
+        positif: newStatus === "Positif" ? parseInt(newJumlah) : 0,
+        sembuh: newStatus === "Sembuh" ? parseInt(newJumlah) : 0,
+        dirawat: newStatus === "Dirawat" ? parseInt(newJumlah) : 0,
+        meninggal: newStatus === "Meninggal" ? parseInt(newJumlah) : 0,
+      };
+
+      setData((prevData) => [...prevData, newData]);
+    }
+
+    setNewProvinsi("");
+    setNewStatus("");
+    setNewJumlah("");
+  };
+
+  const provinsiChange = (event) => {
+    setNewProvinsi(event.target.value);
+  };
+
+  const statusChange = (event) => {
+    setNewStatus(event.target.value);
+  };
+
+  const jumlahChange = (event) => {
+    setNewJumlah(event.target.value);
+  };
   return (
     <main>
       <div className={styles.group}>
@@ -48,58 +163,34 @@ function Main() {
         <h1>Provinsi</h1>
         <a href=".">Data Covid Berdasarkan Provinsi</a>
         <table>
-          <tr className={styles.fgreen}>
-            <th>No</th>
-            <th>Provinsi</th>
-            <th>Positif</th>
-            <th>Sembuh</th>
-            <th>Dirawat</th>
-            <th>Meninggal</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Aceh</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Bandung</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Depok</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Jakarta</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Medan</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-          </tr>
+          <thead>
+            <tr className={styles.fgreen}>
+              <th>No</th>
+              <th>Provinsi</th>
+              <th>Positif</th>
+              <th>Sembuh</th>
+              <th>Dirawat</th>
+              <th>Meninggal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map(
+              ({ no, provinsi, positif, sembuh, dirawat, meninggal }) => (
+                <tr key={no}>
+                  <td>{no}</td>
+                  <td>{provinsi}</td>
+                  <td>{positif}</td>
+                  <td>{sembuh}</td>
+                  <td>{dirawat}</td>
+                  <td>{meninggal}</td>
+                </tr>
+              )
+            )}
+          </tbody>
         </table>
       </div>
       <div className={styles.containers}>
-        <div class={styles.content}>
+        <div className={styles.content}>
           <div className={styles.images}>
             <img src={foto2} alt="img2" />
           </div>
@@ -107,15 +198,27 @@ function Main() {
         <div className={styles.content}>
           <div className={styles.form}>
             <h1>Form Covid</h1>
-            <form>
-              <label for="provinsi">Provinsi:</label>
-              <input id="provinsi" />
-              <label for="status">Status:</label>
-              <input id="status" />
-              <label for="jumlah">Jumlah:</label>
-              <input id="jumlah" />
+            <form onSubmit={handleFormSubmit}>
+              <label>Provinsi:</label>
+              <input
+                type="text"
+                value={newProvinsi}
+                onChange={provinsiChange}
+              />
+              <label>Status:</label>
+              <select value={newStatus} onChange={statusChange}>
+                <option value="">Pilih Status</option>
+                <option value="Positif">Positif</option>
+                <option value="Sembuh">Sembuh</option>
+                <option value="Dirawat">Dirawat</option>
+                <option value="Meninggal">Meninggal</option>
+              </select>
+              <label>Jumlah:</label>
+              <input type="number" value={newJumlah} onChange={jumlahChange} />
               <div>
-                <button className={styles.buttons}>Submit</button>
+                <button className={styles.buttons} type="submit">
+                  Submit
+                </button>
               </div>
             </form>
           </div>

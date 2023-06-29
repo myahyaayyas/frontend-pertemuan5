@@ -1,33 +1,33 @@
-header {
+footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(6, 214, 160, 1);
+  background: var(--primary, #06d6a0);
   padding: 20px;
 }
 
-header div {
+footer div {
   color: #fff;
   font-size: 25px;
 }
 
-h1 {
+footer h1 {
   margin: 0;
   color: white;
   font-size: 48px;
 }
 
-nav ul {
+footer nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-nav ul li {
+footer nav ul li {
   display: inline;
 }
 
-nav ul li a {
+footer nav ul li a {
   text-decoration: none;
   padding: 10px;
   color: white;

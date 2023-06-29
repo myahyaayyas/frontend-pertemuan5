@@ -215,7 +215,8 @@
   font-size: 61px;
 }
 
-.form input {
+.form input,
+select {
   border-radius: 10px;
   border: 2px solid var(--primary, #06d6a0);
   background: #fff;
@@ -235,8 +236,10 @@ label {
   font-size: 24px;
 }
 
-input {
+input,
+select {
   margin-bottom: 10px;
+  color: var(--gray-color, #64748b);
   font-size: 24px;
 }
 
