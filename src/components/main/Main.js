@@ -51,7 +51,7 @@ function Main() {
   const [newStatus, setNewStatus] = useState("");
   const [newJumlah, setNewJumlah] = useState("");
 
-  const handleFormSubmit = (event) => {
+  const formSubmit = (event) => {
     event.preventDefault();
 
     if (!newProvinsi || !newStatus || !newJumlah) {
@@ -198,7 +198,7 @@ function Main() {
         <div className={styles.content}>
           <div className={styles.form}>
             <h1>Form Covid</h1>
-            <form onSubmit={handleFormSubmit}>
+            <form onSubmit={formSubmit}>
               <label>Provinsi:</label>
               <input
                 type="text"
